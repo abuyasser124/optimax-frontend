@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OptiMax v6.3.4 - تحليل الأسهم الشرعية</title>
-    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22background_color%22%3A%22%23f5f5f5%22%2C%22dir%22%3A%22rtl%22%2C%22display%22%3A%22standalone%22%2C%22name%22%3A%22OptiMax%22%2C%22orientation%22%3A%22any%22%2C%22scope%22%3A%22%2F%22%2C%22short_name%22%3A%22OptiMax%22%2C%22start_url%22%3A%22%2F%22%2C%22theme_color%22%3A%22%23667eea%22%2C%22id%22%3A%22OptiMax%22%2C%22description%22%3A%22%D8%AA%D8%AD%D9%84%D9%8A%D9%84%20%D8%A7%D8%AD%D8%AA%D8%B1%D8%A7%D9%81%D9%8A%20%D9%84%D9%84%D8%A3%D8%B3%D9%87%D9%85%20%D8%A7%D9%84%D8%B4%D8%B1%D8%B9%D9%8A%D8%A9%20%D8%A7%D9%84%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9%20%D9%85%D8%AF%D8%B9%D9%88%D9%85%20%D8%A8%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A%22%7D">
-    <meta name="theme-color" content="#667eea">
-    <meta name="description" content="تحليل احترافي للأسهم مدعوم بالذكاء الاصطناعي - OptiMax v6.3.4">
+    <title>OptiMax - تحليل الأسهم الشرعية</title>
+    <script src="https://cdn.jsdelivr.net/npm/idb@7/build/umd.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,10 +14,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
-            color: #333;
         }
 
         .container {
@@ -29,10 +26,10 @@
 
         .header {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
             text-align: center;
         }
 
@@ -47,50 +44,27 @@
             font-size: 1.1em;
         }
 
-        .version {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .credits {
-            color: #999;
-            font-size: 0.85em;
-            margin-top: 10px;
-            font-style: italic;
-        }
-
-        .nav-tabs {
+        .tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
 
-        .nav-tab {
+        .tab {
             flex: 1;
+            padding: 15px;
             background: white;
             border: none;
-            padding: 15px;
             border-radius: 10px;
-            font-size: 1em;
-            font-weight: bold;
             cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
-        .nav-tab.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .tab.active {
+            background: #667eea;
             color: white;
-        }
-
-        .nav-tab:hover {
-            transform: translateY(-2px);
         }
 
         .tab-content {
@@ -101,155 +75,26 @@
             display: block;
         }
 
-        .search-box {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .search-input-container {
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 12px 20px;
-            border: 2px solid #667eea;
-            border-radius: 25px;
-            font-size: 1em;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .search-input:focus {
-            border-color: #764ba2;
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
-        }
-
-        .search-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1em;
-        }
-
-        .search-btn:hover {
-            background: #764ba2;
-            transform: translateY(-2px);
-        }
-
-        .search-hint {
-            color: #999;
-            font-size: 0.85em;
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .status-bar {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .status-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-
-        .market-open {
-            background: #10b981;
-            color: white;
-        }
-
-        .market-closed {
-            background: #ef4444;
-            color: white;
-        }
-
-        .loading {
-            background: white;
-            border-radius: 15px;
-            padding: 60px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .loading-spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #667eea;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .stock-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-top: 20px;
         }
 
         .stock-card {
             background: white;
-            border-radius: 15px;
             padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            border-left: 5px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
         }
 
         .stock-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .save-recommendation-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .save-recommendation-btn:hover {
-            background: #059669;
-            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
         .stock-header {
@@ -271,94 +116,262 @@
             color: #333;
         }
 
-        .stock-name {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 15px;
+        .stock-change {
+            margin: 10px 0;
+            font-size: 1.1em;
         }
 
-        .stock-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
+        .positive {
+            color: #10b981;
         }
 
-        .info-item {
-            display: flex;
-            flex-direction: column;
+        .negative {
+            color: #ef4444;
         }
 
-        .info-label {
-            font-size: 0.75em;
-            color: #999;
-            margin-bottom: 3px;
-        }
-
-        .info-value {
-            font-size: 0.95em;
+        .score-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
             font-weight: bold;
-            color: #333;
+            margin: 10px 0;
         }
 
         .signal-badge {
             display: inline-block;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
             font-size: 0.9em;
-            text-align: center;
+            font-weight: bold;
         }
 
-        .super-strong-buy {
-            background: #059669;
-            color: white;
-        }
-
-        .strong-buy {
+        .signal-super-strong-buy {
             background: #10b981;
             color: white;
         }
 
-        .buy {
-            background: #3b82f6;
+        .signal-strong-buy {
+            background: #34d399;
             color: white;
         }
 
-        .hold {
-            background: #f59e0b;
-            color: white;
+        .signal-buy {
+            background: #6ee7b7;
+            color: #065f46;
         }
 
-        .sell {
+        .signal-hold {
+            background: #fbbf24;
+            color: #78350f;
+        }
+
+        .signal-sell {
             background: #ef4444;
             color: white;
         }
 
-        .saved-table {
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
         }
 
-        .saved-table h2 {
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+        }
+
+        .detail-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+
+        .detail-section h3 {
             color: #667eea;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        .table-controls {
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .detail-item {
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .detail-item strong {
+            color: #666;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .save-recommendation-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            left: auto;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .save-recommendation-btn:hover {
+            background: #059669;
+        }
+
+        .save-recommendation-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .recommendations-table {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .recommendations-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .recommendations-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: right;
+        }
+
+        .recommendations-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .recommendations-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .action-buttons {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
 
-        .btn {
-            padding: 10px 20px;
+        .action-btn {
+            padding: 12px 24px;
             border: none;
-            border-radius: 25px;
-            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
             transition: all 0.3s;
         }
 
@@ -368,7 +381,7 @@
         }
 
         .btn-primary:hover {
-            background: #764ba2;
+            background: #5568d3;
         }
 
         .btn-danger {
@@ -380,542 +393,45 @@
             background: #dc2626;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        th {
-            background: #f9fafb;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background: #f9fafb;
-        }
-
-        .profit-positive {
-            color: #10b981;
-            font-weight: bold;
-        }
-
-        .profit-negative {
-            color: #ef4444;
-            font-weight: bold;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-box {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 10px;
-        }
-
-        .stat-value {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            overflow-y: auto;
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 50px auto;
-            padding: 0;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 900px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideDown 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 20px 20px 0 0;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .close {
-            color: white;
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            transition: all 0.3s;
-        }
-
-        .close:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .summary-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .summary-score {
-            font-size: 3em;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .summary-signal {
-            font-size: 1.5em;
-            font-weight: bold;
-            padding: 10px 30px;
-            border-radius: 25px;
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            margin-top: 10px;
-        }
-
-        .confirmation-section {
-            background: #fff3cd;
-            padding: 25px;
-            border-radius: 15px;
-            border-right: 4px solid #f59e0b;
-            margin-bottom: 25px;
-        }
-
-        .section-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .confirmation-signals {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .signal-item {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .signal-item.positive {
-            border-left: 4px solid #10b981;
-        }
-
-        .signal-item.negative {
-            border-left: 4px solid #ef4444;
-        }
-
-        .signal-item.neutral {
-            border-left: 4px solid #f59e0b;
-        }
-
-        .signal-label {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .signal-value {
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .verdict-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-top: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .verdict-score {
-            font-size: 2em;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .verdict-text {
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-
-        .verdict-text.enter {
-            color: #10b981;
-        }
-
-        .verdict-text.watch {
-            color: #f59e0b;
-        }
-
-        .verdict-text.avoid {
-            color: #ef4444;
-        }
-
-        .analysis-section {
-            margin-bottom: 30px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            border-right: 4px solid #667eea;
-        }
-
-        .direction-banner {
-            padding: 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-
-        .direction-banner.bullish {
-            background: #d1fae5;
-            color: #065f46;
-            border: 2px solid #10b981;
-        }
-
-        .direction-banner.bearish {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 2px solid #ef4444;
-        }
-
-        .direction-banner.neutral {
+        .warning-box {
             background: #fef3c7;
-            color: #92400e;
-            border: 2px solid #f59e0b;
-        }
-
-        .direction-note {
-            background: white;
+            border-left: 4px solid #f59e0b;
             padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 0.9em;
-            color: #666;
-            border-right: 3px solid #667eea;
-        }
-
-        .confidence-box {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .confidence-item {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .confidence-label {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .confidence-value {
-            font-size: 2em;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .targets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .target-box {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .target-label {
-            font-size: 0.85em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .target-value {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .target-value.positive {
-            color: #10b981;
-        }
-
-        .target-value.negative {
-            color: #ef4444;
-        }
-
-        .summary-text {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #333;
             margin: 15px 0;
+            border-radius: 5px;
         }
 
-        .list-section {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
             margin: 15px 0;
+            border-radius: 5px;
         }
 
-        .list-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .list-section li {
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            background: #f8f9fa;
-            position: relative;
-            padding-right: 30px;
-        }
-
-        .list-section li:before {
-            content: "•";
-            position: absolute;
-            right: 10px;
-            font-size: 1.5em;
-            color: #667eea;
-        }
-
-        .risk-item:before {
-            color: #ef4444 !important;
-            content: "⚠️" !important;
-        }
-
-        .opportunity-item:before {
-            color: #10b981 !important;
-            content: "✅" !important;
-        }
-
-        .alert-item:before {
-            color: #f59e0b !important;
-            content: "⚡" !important;
-        }
-
-        .glossary-grid {
-            display: grid;
-            gap: 15px;
-        }
-
-        .glossary-item {
-            background: white;
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
             padding: 15px;
-            border-radius: 10px;
-            border-right: 3px solid #667eea;
-        }
-
-        .glossary-term {
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .glossary-definition {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .indicators-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .indicator-box {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .indicator-label {
-            font-size: 0.85em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .indicator-value {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .refresh-btn {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-            padding: 10px 25px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .refresh-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .error {
-            background: #fee;
-            color: #c33;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .positive {
-            color: #10b981;
-        }
-
-        .negative {
-            color: #ef4444;
-        }
-
-        .divider {
-            height: 2px;
-            background: linear-gradient(to left, transparent, #667eea, transparent);
-            margin: 30px 0;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-        }
-
-        .empty-state-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
         }
 
         @media (max-width: 768px) {
-            .stock-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .header h1 {
                 font-size: 1.8em;
             }
-            
-            .status-bar {
-                flex-direction: column;
-                gap: 10px;
-            }
 
-            .search-input-container {
-                flex-direction: column;
-            }
-
-            .confidence-box, .targets-grid, .indicators-grid, .confirmation-signals {
+            .stock-grid {
                 grid-template-columns: 1fr;
             }
 
-            .nav-tabs {
-                flex-direction: column;
+            .modal-content {
+                padding: 20px;
             }
 
-            table {
-                font-size: 0.85em;
-            }
-
-            th, td {
-                padding: 8px 4px;
+            .detail-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -923,794 +439,529 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 OptiMax</h1>
-            <p>تحليل احترافي للأسهم مدعوم بالذكاء الاصطناعي</p>
-            <span class="version">v6.3.4</span>
-            <div class="credits">تطوير: عبدالرحمن أبوحيمد أبوياسر + Claude AI</div>
+            <h1>📈 OptiMax v7.2.0</h1>
+            <p>تحليل ذكي للأسهم الشرعية - Ultra Edition</p>
         </div>
 
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="switchTab('analysis')">📈 تحليل الأسهم</button>
-            <button class="nav-tab" onclick="switchTab('saved')">💾 التوصيات المحفوظة</button>
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('analysis')">📊 التحليل</button>
+            <button class="tab" onclick="switchTab('saved')">💾 التوصيات المحفوظة</button>
         </div>
 
-        <div id="analysisTab" class="tab-content active">
-            <div class="search-box">
-                <div class="search-input-container">
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        class="search-input" 
-                        placeholder="ابحث عن أي سهم بالرمز (AAPL, MSFT, TSLA...)"
-                        onkeypress="if(event.key === 'Enter') searchStock()"
-                    >
-                    <button class="search-btn" onclick="searchStock()">🔍 تحليل</button>
-                </div>
-                <div class="search-hint">💡 يمكنك تحليل أي سهم - حتى خارج القائمة الشرعية</div>
-            </div>
-
-            <div class="status-bar">
-                <div class="status-item">
-                    <span id="marketStatus" class="status-badge">جاري التحميل...</span>
-                    <span id="updateTime"></span>
-                </div>
-                <button class="refresh-btn" onclick="loadData()">🔄 تحديث</button>
-            </div>
-
-            <div id="loading" class="loading">
-                <div class="loading-spinner"></div>
-                <h2>جاري تحليل الأسهم...</h2>
-                <p>قد يستغرق هذا 1-2 دقيقة</p>
-            </div>
-
-            <div id="error" style="display: none;" class="error"></div>
-
-            <div id="stockGrid" class="stock-grid" style="display: none;"></div>
+        <div id="analysis-tab" class="tab-content active">
+            <div id="stocks-container" class="loading">⏳ جاري تحميل البيانات...</div>
         </div>
 
-        <div id="savedTab" class="tab-content">
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-label">إجمالي التوصيات</div>
-                    <div class="stat-value" id="totalSaved">0</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">نسبة النجاح</div>
-                    <div class="stat-value positive" id="winRate">0%</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">متوسط الربح</div>
-                    <div class="stat-value" id="avgProfit">0%</div>
-                </div>
+        <div id="saved-tab" class="tab-content">
+            <div id="saved-stats"></div>
+            <div class="action-buttons">
+                <button class="action-btn btn-primary" onclick="loadSavedRecommendations()">🔄 تحديث</button>
+                <button class="action-btn btn-danger" onclick="deleteAllRecommendations()">🗑️ حذف الكل</button>
             </div>
-
-            <div class="saved-table">
-                <h2>📊 التوصيات المحفوظة</h2>
-                
-                <div class="table-controls">
-                    <button class="btn btn-primary" onclick="refreshSavedData()">🔄 تحديث الأسعار</button>
-                    <button class="btn btn-primary" onclick="exportData()">📤 تصدير</button>
-                    <button class="btn btn-danger" onclick="clearAllSaved()">🗑️ حذف الكل</button>
-                </div>
-
-                <div id="savedTableContent"></div>
-            </div>
+            <div id="saved-recommendations" class="loading">⏳ جاري تحميل التوصيات...</div>
         </div>
     </div>
 
-    <div id="detailModal" class="modal">
+    <div id="detail-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2 id="modalTitle" style="margin-top: 10px;"></h2>
-                <p id="modalSubtitle" style="margin-top: 5px; opacity: 0.9;"></p>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p>جاري تحليل السهم...</p>
-                </div>
-            </div>
+            <button class="close-modal" onclick="closeModal()">✖</button>
+            <div id="detail-content"></div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/idb@7/build/umd.js"></script>
     <script>
         const API_URL = 'https://optimax-backend.vercel.app';
-        let db;
-
-        async function initDB() {
-            db = await idb.openDB('OptiMaxDB', 1, {
-                upgrade(db) {
-                    if (!db.objectStoreNames.contains('recommendations')) {
-                        db.createObjectStore('recommendations', { keyPath: 'id', autoIncrement: true });
-                    }
-                }
-            });
-        }
-
-        async function saveRecommendation(stockData) {
-            if (!db) await initDB();
-            
-            const recommendation = {
-                symbol: stockData.symbol,
-                name: stockData.name,
-                date: new Date().toISOString(),
-                score: stockData.score,
-                signal: stockData.signal,
-                entry_price: stockData.price,
-                confirmation: stockData.confirmation?.positive_count || 0,
-                targets: stockData.targets,
-                rsi: stockData.indicators?.rsi,
-                macd: stockData.indicators?.macd
-            };
-
-            await db.add('recommendations', recommendation);
-            alert('✅ تم حفظ التوصية بنجاح!');
-        }
-
-        async function loadSavedRecommendations() {
-            if (!db) await initDB();
-            
-            const saved = await db.getAll('recommendations');
-            
-            if (saved.length === 0) {
-                document.getElementById('savedTableContent').innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <h3>لا توجد توصيات محفوظة</h3>
-                        <p>ابدأ بحفظ التوصيات من صفحة التحليل</p>
-                    </div>
-                `;
-                updateStats([]);
-                return;
-            }
-
-            let profits = [];
-            let wins = 0;
-            
-            let tableHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>السهم</th>
-                            <th>التاريخ</th>
-                            <th>التوصية</th>
-                            <th>سعر الدخول</th>
-                            <th>السعر الحالي</th>
-                            <th>الربح/الخسارة</th>
-                            <th>الأيام</th>
-                            <th>إجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            for (let item of saved) {
-                const currentPrice = await getCurrentPrice(item.symbol);
-                const profit = ((currentPrice - item.entry_price) / item.entry_price) * 100;
-                const daysAgo = Math.floor((new Date() - new Date(item.date)) / (1000 * 60 * 60 * 24));
-                
-                profits.push(profit);
-                if (profit > 0) wins++;
-
-                const profitClass = profit >= 0 ? 'profit-positive' : 'profit-negative';
-                const profitSign = profit >= 0 ? '+' : '';
-
-                tableHTML += `
-                    <tr>
-                        <td><strong>${item.symbol}</strong></td>
-                        <td>منذ ${daysAgo} يوم</td>
-                        <td>${getSignalArabic(item.signal)} (${item.score}/13)</td>
-                        <td>$${item.entry_price.toFixed(2)}</td>
-                        <td>$${currentPrice.toFixed(2)}</td>
-                        <td class="${profitClass}">${profitSign}${profit.toFixed(2)}%</td>
-                        <td>${daysAgo}</td>
-                        <td>
-                            <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.8em;" onclick="deleteRecommendation(${item.id})">
-                                🗑️
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }
-
-            tableHTML += '</tbody></table>';
-            document.getElementById('savedTableContent').innerHTML = tableHTML;
-            
-            updateStats(profits, wins, saved.length);
-        }
-
-        function updateStats(profits, wins, total) {
-            document.getElementById('totalSaved').textContent = total || 0;
-            
-            if (total > 0) {
-                const winRate = ((wins / total) * 100).toFixed(1);
-                document.getElementById('winRate').textContent = winRate + '%';
-                
-                const avgProfit = (profits.reduce((a, b) => a + b, 0) / profits.length).toFixed(2);
-                document.getElementById('avgProfit').textContent = (avgProfit >= 0 ? '+' : '') + avgProfit + '%';
-                document.getElementById('avgProfit').className = avgProfit >= 0 ? 'stat-value positive' : 'stat-value negative';
-            } else {
-                document.getElementById('winRate').textContent = '0%';
-                document.getElementById('avgProfit').textContent = '0%';
-            }
-        }
-
-        async function getCurrentPrice(symbol) {
-            try {
-                const response = await fetch(`${API_URL}/analysis/${symbol}`);
-                const data = await response.json();
-                return data.price;
-            } catch (error) {
-                return 0;
-            }
-        }
-
-        async function deleteRecommendation(id) {
-            if (!confirm('هل أنت متأكد من حذف هذه التوصية؟')) return;
-            
-            if (!db) await initDB();
-            await db.delete('recommendations', id);
-            loadSavedRecommendations();
-        }
-
-        async function clearAllSaved() {
-            if (!confirm('هل أنت متأكد من حذف جميع التوصيات المحفوظة؟')) return;
-            
-            if (!db) await initDB();
-            await db.clear('recommendations');
-            loadSavedRecommendations();
-        }
-
-        async function refreshSavedData() {
-            loadSavedRecommendations();
-        }
-
-        async function exportData() {
-            if (!db) await initDB();
-            const saved = await db.getAll('recommendations');
-            
-            const dataStr = JSON.stringify(saved, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `optimax-recommendations-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-        }
+        let currentTab = 'analysis';
 
         function switchTab(tab) {
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             
-            if (tab === 'analysis') {
-                document.querySelector('.nav-tab:first-child').classList.add('active');
-                document.getElementById('analysisTab').classList.add('active');
-            } else {
-                document.querySelector('.nav-tab:last-child').classList.add('active');
-                document.getElementById('savedTab').classList.add('active');
+            event.target.classList.add('active');
+            document.getElementById(`${tab}-tab`).classList.add('active');
+
+            if (tab === 'saved') {
                 loadSavedRecommendations();
             }
         }
 
-        async function loadData() {
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const grid = document.getElementById('stockGrid');
-
-            loading.style.display = 'block';
-            error.style.display = 'none';
-            grid.style.display = 'none';
-
+        async function loadStocks() {
+            const container = document.getElementById('stocks-container');
+            
             try {
-                const response = await fetch(`${API_URL}/top-opportunities`);
-                if (!response.ok) throw new Error('فشل في جلب البيانات');
-                
+                const response = await fetch(`${API_URL}/top-opportunities?limit=10`);
                 const data = await response.json();
                 
-                const marketStatus = document.getElementById('marketStatus');
-                marketStatus.className = `status-badge ${data.market_open ? 'market-open' : 'market-closed'}`;
-                marketStatus.textContent = data.market_open ? '🟢 السوق مفتوح' : '🔴 السوق مغلق';
-                
-                document.getElementById('updateTime').textContent = `آخر تحديث: ${new Date(data.updated_at).toLocaleString('ar-SA')}`;
+                if (!data.top_opportunities || data.top_opportunities.length === 0) {
+                    container.innerHTML = '<div class="no-data">لا توجد فرص متاحة حالياً</div>';
+                    return;
+                }
 
-                grid.innerHTML = data.top_opportunities.map(stock => `
-                    <div class="stock-card">
-                        <button class="save-recommendation-btn" onclick="event.stopPropagation(); saveFromCard('${stock.symbol}')">
-                            💾 حفظ
-                        </button>
-                        <div onclick="showDetails('${stock.symbol}')">
+                let html = '<div class="stock-grid">';
+                
+                data.top_opportunities.forEach(stock => {
+                    const changeClass = stock.change_pct >= 0 ? 'positive' : 'negative';
+                    const changeSign = stock.change_pct >= 0 ? '+' : '';
+                    
+                    html += `
+                        <div class="stock-card" onclick="showDetails('${stock.symbol}')">
                             <div class="stock-header">
                                 <div class="stock-symbol">${stock.symbol}</div>
                                 <div class="stock-price">$${stock.price}</div>
                             </div>
-                            <div class="stock-name">${stock.name}</div>
-                            <div class="stock-info">
-                                <div class="info-item">
-                                    <span class="info-label">التغير %</span>
-                                    <span class="info-value ${stock.change_pct >= 0 ? 'positive' : 'negative'}">
-                                        ${stock.change_pct >= 0 ? '+' : ''}${stock.change_pct}%
-                                    </span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">النقاط</span>
-                                    <span class="info-value">${stock.score}/13</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">RSI</span>
-                                    <span class="info-value">${stock.rsi}</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">MACD</span>
-                                    <span class="info-value">${stock.macd}</span>
-                                </div>
+                            <div class="stock-change ${changeClass}">
+                                ${changeSign}${stock.change_pct.toFixed(2)}%
                             </div>
-                            <div style="text-align: center;">
-                                <span class="signal-badge ${getSignalClass(stock.signal)}">
-                                    ${getSignalArabic(stock.signal)}
-                                </span>
+                            <div class="score-badge">${stock.score}/13</div>
+                            <div class="signal-badge signal-${stock.signal.toLowerCase().replace(/ /g, '-')}">${stock.signal}</div>
+                            <div style="margin-top: 10px; color: #666;">
+                                RSI: ${stock.rsi} | MACD: ${stock.macd}
                             </div>
                         </div>
-                    </div>
-                `).join('');
-
-                loading.style.display = 'none';
-                grid.style.display = 'grid';
-
-            } catch (err) {
-                loading.style.display = 'none';
-                error.style.display = 'block';
-                error.textContent = 'حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.';
-                console.error(err);
-            }
-        }
-
-        async function saveFromCard(symbol) {
-            try {
-                const response = await fetch(`${API_URL}/analysis/${symbol}`);
-                const data = await response.json();
-                await saveRecommendation(data);
+                    `;
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+                
             } catch (error) {
-                alert('❌ فشل في حفظ التوصية');
-                console.error(error);
+                console.error('Error loading stocks:', error);
+                container.innerHTML = '<div class="error">❌ فشل تحميل البيانات. يرجى المحاولة مرة أخرى.</div>';
             }
-        }
-
-        async function searchStock() {
-            const symbol = document.getElementById('searchInput').value.trim().toUpperCase();
-            if (!symbol) {
-                alert('الرجاء إدخال رمز السهم');
-                return;
-            }
-            showDetails(symbol);
         }
 
         async function showDetails(symbol) {
-            const modal = document.getElementById('detailModal');
-            const modalBody = document.getElementById('modalBody');
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('detail-content');
             
-            modal.style.display = 'block';
-            modalBody.innerHTML = `
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p>جاري تحليل السهم بواسطة Claude AI...</p>
-                </div>
-            `;
-
+            modal.classList.add('active');
+            content.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
+            
             try {
                 const response = await fetch(`${API_URL}/analysis/${symbol}`);
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        throw new Error('لم يتم العثور على بيانات لهذا السهم');
-                    }
-                    throw new Error('فشل في جلب التحليل');
-                }
-                
                 const data = await response.json();
                 
-                document.getElementById('modalTitle').textContent = `${data.symbol} - ${data.name}`;
-                document.getElementById('modalSubtitle').textContent = `السعر: $${data.price} | التغير: ${data.change_pct >= 0 ? '+' : ''}${data.change_pct}%`;
+                let html = `
+                    <button class="save-recommendation-btn" onclick="event.stopPropagation(); saveRecommendation('${symbol}')">
+                        💾 حفظ هذه التوصية
+                    </button>
 
-                let analysisHTML = `
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <button class="btn btn-primary" onclick="saveCurrentAnalysis()">💾 حفظ هذه التوصية</button>
+                    <h2>${data.symbol} - ${data.name}</h2>
+                    <p>السعر: $${data.price} | التغير: ${data.change_pct >= 0 ? '+' : ''}${data.change_pct.toFixed(2)}%</p>
+
+                    <div class="detail-section">
+                        <h3>📈 ملخص التقييم</h3>
+                        <div class="score-badge" style="font-size: 1.5em;">${data.score}/13</div>
+                        <div class="signal-badge signal-${data.signal.toLowerCase().replace(/ /g, '-')}" style="font-size: 1.2em; margin: 10px 0;">
+                            ${data.signal}
+                        </div>
+                        ${data.opportunity_quality ? `
+                            <div style="margin: 10px 0;">
+                                <strong>Grade: ${data.opportunity_quality.grade}</strong>
+                                <p>${data.opportunity_quality.recommendation}</p>
+                            </div>
+                        ` : ''}
                     </div>
 
-                    <div class="summary-section">
-                        <h2>📈 ملخص التقييم</h2>
-                        <div class="summary-score">${data.score}/13</div>
-                        <div class="summary-signal">${getSignalArabic(data.signal)}</div>
+                    <div class="detail-section">
+                        <h3>🔍 إشارات التأكيد</h3>
+                        <div class="detail-grid">
+                            ${Object.entries(data.confirmation.signals).map(([key, value]) => `
+                                <div class="detail-item">
+                                    <strong>${key.toUpperCase()}</strong>
+                                    ${value}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <p style="margin-top: 15px; font-size: 1.1em;">
+                            <strong>${data.confirmation.positive_count}/${data.confirmation.total}</strong>
+                            <br>${data.confirmation.verdict}
+                        </p>
+                    </div>
+
+                    ${data.final_recommendation ? `
+                        <div class="${data.final_recommendation.confidence === 'عالية' ? 'success-box' : data.final_recommendation.confidence === 'منخفضة' ? 'warning-box' : 'info-box'}">
+                            <strong>📋 التوصية النهائية: ${data.final_recommendation.action}</strong>
+                            <p>${data.final_recommendation.reason}</p>
+                            <small>مستوى الثقة: ${data.final_recommendation.confidence}</small>
+                        </div>
+                    ` : ''}
+
+                    ${data.daily_change_context ? `
+                        <div class="${data.daily_change_context.type === 'تصحيح صحي' || data.daily_change_context.type === 'زخم قوي' ? 'success-box' : data.daily_change_context.type === 'تحذير' ? 'warning-box' : 'info-box'}">
+                            ${data.daily_change_context.message}
+                        </div>
+                    ` : ''}
+
+                    <div class="detail-section">
+                        <h3>🎯 الأهداف المتوقعة</h3>
+                        <p><strong>➡️ الاتجاه: ${data.targets.direction}</strong></p>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <strong>نقطة الدخول</strong>
+                                $${data.targets.entry}
+                            </div>
+                            <div class="detail-item">
+                                <strong>الهدف القصير</strong>
+                                $${data.targets.target_short} ⬆️
+                            </div>
+                            <div class="detail-item">
+                                <strong>الهدف المتوسط</strong>
+                                $${data.targets.target_medium} ⬆️
+                            </div>
+                            <div class="detail-item">
+                                <strong>وقف الخسارة</strong>
+                                $${data.targets.stop_loss} ⬇️
+                            </div>
+                        </div>
+                        ${data.risk_reward ? `
+                            <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+                                <strong>نسبة المخاطرة/العائد: ${data.risk_reward.ratio}</strong>
+                                <p>عائد محتمل: ${data.risk_reward.potential_gain}% | خسارة محتملة: ${data.risk_reward.potential_loss}%</p>
+                                <p>التقييم: ${data.risk_reward.verdict}</p>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    ${data.position_risk && (data.position_risk.warnings.length > 0 || data.position_risk.opportunities.length > 0) ? `
+                        <div class="detail-section">
+                            <h3>⚠️ تحليل المكان</h3>
+                            ${data.position_risk.warnings.length > 0 ? `
+                                <div class="warning-box">
+                                    ${data.position_risk.warnings.map(w => `<p>${w}</p>`).join('')}
+                                </div>
+                            ` : ''}
+                            ${data.position_risk.opportunities.length > 0 ? `
+                                <div class="success-box">
+                                    ${data.position_risk.opportunities.map(o => `<p>${o}</p>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+
+                    ${data.late_entry_warning && data.late_entry_warning.warnings.length > 0 ? `
+                        <div class="warning-box">
+                            <strong>⚠️ تحذيرات الدخول المتأخر:</strong>
+                            ${data.late_entry_warning.warnings.map(w => `<p>${w}</p>`).join('')}
+                        </div>
+                    ` : ''}
+
+                    <div class="detail-section">
+                        <h3>📊 مستويات الدعم والمقاومة</h3>
+                        <div class="detail-grid">
+                            ${data.support_resistance.resistance_1 ? `
+                                <div class="detail-item">
+                                    <strong>مقاومة 1</strong>
+                                    $${data.support_resistance.resistance_1}
+                                </div>
+                            ` : ''}
+                            ${data.support_resistance.resistance_2 ? `
+                                <div class="detail-item">
+                                    <strong>مقاومة 2</strong>
+                                    $${data.support_resistance.resistance_2}
+                                </div>
+                            ` : ''}
+                            ${data.support_resistance.support_1 ? `
+                                <div class="detail-item">
+                                    <strong>دعم 1</strong>
+                                    $${data.support_resistance.support_1}
+                                </div>
+                            ` : ''}
+                            ${data.support_resistance.support_2 ? `
+                                <div class="detail-item">
+                                    <strong>دعم 2</strong>
+                                    $${data.support_resistance.support_2}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    ${data.momentum_analysis ? `
+                        <div class="detail-section">
+                            <h3>⚡ تحليل الزخم</h3>
+                            <p><strong>النقاط: ${data.momentum_analysis.score}/10</strong></p>
+                            <p>القوة: ${data.momentum_analysis.strength}</p>
+                        </div>
+                    ` : ''}
+
+                    ${data.recent_performance ? `
+                        <div class="detail-section">
+                            <h3>📈 الأداء الأخير (5 أيام)</h3>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <strong>الاتجاه</strong>
+                                    ${data.recent_performance.trend}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>أيام إيجابية</strong>
+                                    ${data.recent_performance.positive_days}/5
+                                </div>
+                                <div class="detail-item">
+                                    <strong>متوسط التغير</strong>
+                                    ${data.recent_performance.avg_daily_change}%
+                                </div>
+                                <div class="detail-item">
+                                    <strong>الاستمرارية</strong>
+                                    ${data.recent_performance.consistency}
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    ${data.claude_analysis ? `
+                        <div class="detail-section">
+                            <h3>🎯 رأي Claude AI</h3>
+                            <p><strong>درجة الثقة: ${data.claude_analysis.confidence}/100</strong></p>
+                            <p><strong>تقييم النجاح: ${data.claude_analysis.success_rating}/10</strong></p>
+                            <p><strong>احتمالية الربح: ${data.claude_analysis.profit_probability}%</strong></p>
+                            <p style="margin-top: 15px;"><strong>📝 الملخص:</strong><br>${data.claude_analysis.summary}</p>
+                            <p style="margin-top: 15px;"><strong>💡 التوصية النهائية:</strong><br>${data.claude_analysis.recommendation}</p>
+                            
+                            ${data.claude_analysis.risks && data.claude_analysis.risks.length > 0 ? `
+                                <div style="margin-top: 15px;">
+                                    <strong>⚠️ المخاطر</strong>
+                                    <ul>
+                                        ${data.claude_analysis.risks.map(risk => `<li>${risk}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+
+                            ${data.claude_analysis.opportunities && data.claude_analysis.opportunities.length > 0 ? `
+                                <div style="margin-top: 15px;">
+                                    <strong>✅ الفرص</strong>
+                                    <ul>
+                                        ${data.claude_analysis.opportunities.map(opp => `<li>${opp}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+
+                            ${data.claude_analysis.alerts && data.claude_analysis.alerts.length > 0 ? `
+                                <div style="margin-top: 15px;">
+                                    <strong>⚡ التنبيهات الذكية</strong>
+                                    <ul>
+                                        ${data.claude_analysis.alerts.map(alert => `<li>${alert}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+
+                    <div class="detail-section">
+                        <h3>📊 المؤشرات الفنية الكاملة</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item"><strong>RSI</strong>${data.indicators.rsi}</div>
+                            <div class="detail-item"><strong>MACD</strong>${data.indicators.macd}</div>
+                            <div class="detail-item"><strong>ADX</strong>${data.indicators.adx}</div>
+                            <div class="detail-item"><strong>MFI</strong>${data.indicators.mfi}</div>
+                            <div class="detail-item"><strong>ATR</strong>${data.indicators.atr}</div>
+                            <div class="detail-item"><strong>ROC</strong>${data.indicators.roc}%</div>
+                            <div class="detail-item"><strong>SMA-20</strong>$${data.indicators.sma_20}</div>
+                            <div class="detail-item"><strong>SMA-50</strong>$${data.indicators.sma_50}</div>
+                        </div>
+                    </div>
+
+                    ${data.fundamentals ? `
+                        <div class="detail-section">
+                            <h3>💼 البيانات الأساسية</h3>
+                            <div class="detail-grid">
+                                ${data.fundamentals.pe_ratio ? `<div class="detail-item"><strong>P/E Ratio</strong>${data.fundamentals.pe_ratio}</div>` : ''}
+                                ${data.fundamentals.eps ? `<div class="detail-item"><strong>EPS</strong>$${data.fundamentals.eps}</div>` : ''}
+                                ${data.fundamentals.market_cap ? `<div class="detail-item"><strong>Market Cap</strong>${(data.fundamentals.market_cap / 1e9).toFixed(1)}B</div>` : ''}
+                                <div class="detail-item"><strong>القطاع</strong>${data.fundamentals.sector}</div>
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <div class="detail-section">
+                        <h3>📊 تحليل حجم التداول</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item"><strong>الحجم الحالي</strong>${data.volume_analysis.current.toLocaleString()}</div>
+                            <div class="detail-item"><strong>المتوسط</strong>${data.volume_analysis.average.toLocaleString()}</div>
+                            <div class="detail-item"><strong>الفرق</strong>${data.volume_analysis.difference_pct >= 0 ? '+' : ''}${data.volume_analysis.difference_pct.toFixed(2)}%</div>
+                            <div class="detail-item"><strong>الاتجاه</strong>${data.volume_analysis.trend}</div>
+                        </div>
+                        ${data.volume_analysis.is_unusual ? '<p class="warning-box">⚠️ تحذير: حجم تداول غير طبيعي - راقب التلاعب المحتمل!</p>' : ''}
                     </div>
                 `;
-
-                if (data.confirmation) {
-                    const conf = data.confirmation;
-                    let verdictClass = 'watch';
-                    if (conf.verdict.includes('ادخل')) verdictClass = 'enter';
-                    else if (conf.verdict.includes('لا تدخل')) verdictClass = 'avoid';
-
-                    analysisHTML += `
-                        <div class="confirmation-section">
-                            <div class="section-title">🔍 إشارات التأكيد</div>
-                            
-                            <div class="confirmation-signals">
-                                <div class="signal-item ${conf.signals.obv === 'صاعد' ? 'positive' : 'negative'}">
-                                    <div class="signal-label">OBV</div>
-                                    <div class="signal-value">${conf.signals.obv}</div>
-                                </div>
-                                <div class="signal-item ${conf.signals.stochastic.includes('فرصة') ? 'positive' : conf.signals.stochastic.includes('حذر') ? 'negative' : 'neutral'}">
-                                    <div class="signal-label">Stochastic</div>
-                                    <div class="signal-value">${conf.signals.stochastic}</div>
-                                </div>
-                                <div class="signal-item ${conf.signals.candlestick === 'صاعد' ? 'positive' : conf.signals.candlestick === 'هابط' ? 'negative' : 'neutral'}">
-                                    <div class="signal-label">Candlestick</div>
-                                    <div class="signal-value">${conf.signals.candlestick}</div>
-                                </div>
-                                <div class="signal-item ${conf.signals.volume_profile === 'قوي' ? 'positive' : conf.signals.volume_profile === 'ضعيف' ? 'negative' : 'neutral'}">
-                                    <div class="signal-label">Volume Profile</div>
-                                    <div class="signal-value">${conf.signals.volume_profile}</div>
-                                </div>
-                            </div>
-
-                            <div class="verdict-box">
-                                <div class="verdict-score">${conf.positive_count}/${conf.total}</div>
-                                <div class="verdict-text ${verdictClass}">${conf.verdict}</div>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                if (data.targets) {
-                    let directionClass = 'neutral';
-                    let directionIcon = '➡️';
-                    let directionText = 'الاتجاه: محايد (مراقبة)';
-                    let directionNote = '💡 السهم في منطقة محايدة - انتظر إشارات أوضح قبل الدخول';
-                    
-                    if (data.targets.direction === 'صاعد') {
-                        directionClass = 'bullish';
-                        directionIcon = '📈';
-                        directionText = 'الاتجاه: صاعد (السعر متوقع يرتفع)';
-                        directionNote = '✅ الأهداف للأعلى - إذا عندك من السهم احتفظ به ومتابعة الأهداف';
-                    } else if (data.targets.direction === 'هابط') {
-                        directionClass = 'bearish';
-                        directionIcon = '📉';
-                        directionText = 'الاتجاه: هابط (السعر متوقع ينزل)';
-                        directionNote = '⚠️ الأهداف للأعلى (أمل يرتد) - إذا عندك من السهم راقب وقف الخسارة $' + data.targets.stop_loss + ' بحذر!';
-                    }
-
-                    analysisHTML += `
-                        <div class="analysis-section">
-                            <div class="section-title">🎯 الأهداف المتوقعة</div>
-                            
-                            <div class="direction-banner ${directionClass}">
-                                ${directionIcon} ${directionText}
-                            </div>
-                            
-                            <div class="targets-grid">
-                                <div class="target-box">
-                                    <div class="target-label">نقطة الدخول</div>
-                                    <div class="target-value">$${data.targets.entry}</div>
-                                </div>
-                                <div class="target-box">
-                                    <div class="target-label">الهدف القصير</div>
-                                    <div class="target-value positive">
-                                        $${data.targets.target_short} ⬆️
-                                    </div>
-                                </div>
-                                <div class="target-box">
-                                    <div class="target-label">الهدف المتوسط</div>
-                                    <div class="target-value positive">
-                                        $${data.targets.target_medium} ⬆️
-                                    </div>
-                                </div>
-                                <div class="target-box">
-                                    <div class="target-label">وقف الخسارة</div>
-                                    <div class="target-value negative">
-                                        $${data.targets.stop_loss} ⬇️
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="direction-note">
-                                ${directionNote}
-                            </div>
-                        </div>
-                    `;
-                }
-
-                if (data.support_resistance) {
-                    const sr = data.support_resistance;
-                    analysisHTML += `
-                        <div class="analysis-section">
-                            <div class="section-title">📊 مستويات الدعم والمقاومة</div>
-                            <div class="indicators-grid">
-                                ${sr.resistance_1 ? `
-                                <div class="indicator-box">
-                                    <div class="indicator-label">مقاومة 1</div>
-                                    <div class="indicator-value positive">$${sr.resistance_1}</div>
-                                </div>` : ''}
-                                ${sr.resistance_2 ? `
-                                <div class="indicator-box">
-                                    <div class="indicator-label">مقاومة 2</div>
-                                    <div class="indicator-value positive">$${sr.resistance_2}</div>
-                                </div>` : ''}
-                                ${sr.resistance_3 ? `
-                                <div class="indicator-box">
-                                    <div class="indicator-label">مقاومة 3</div>
-                                    <div class="indicator-value positive">$${sr.resistance_3}</div>
-                                </div>` : ''}
-                                ${sr.support_1 ? `
-                                <div class="indicator-box">
-                                    <div class="indicator-label">دعم 1</div>
-                                    <div class="indicator-value negative">$${sr.support_1}</div>
-                                </div>` : ''}
-                                ${sr.support_2 ? `
-                                <div class="indicator-box">
-                                    <div class="indicator-label">دعم 2</div>
-                                    <div class="indicator-value negative">$${sr.support_2}</div>
-                                </div>` : ''}
-                                ${sr.support_3 ? `
-                                <div class="indicator-box">
-                                    <div class="indicator-label">دعم 3</div>
-                                    <div class="indicator-value negative">$${sr.support_3}</div>
-                                </div>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }
                 
-                if (data.claude_analysis) {
-                    const ca = data.claude_analysis;
-                    analysisHTML += `
-                        <div class="divider"></div>
-
-                        <div class="analysis-section">
-                            <div class="section-title">🎯 رأي Claude AI</div>
-                            
-                            <div class="confidence-box">
-                                <div class="confidence-item">
-                                    <div class="confidence-label">درجة الثقة</div>
-                                    <div class="confidence-value">${ca.confidence}/100</div>
-                                </div>
-                                <div class="confidence-item">
-                                    <div class="confidence-label">تقييم النجاح</div>
-                                    <div class="confidence-value">${ca.success_rating}/10</div>
-                                </div>
-                                <div class="confidence-item">
-                                    <div class="confidence-label">احتمالية الربح</div>
-                                    <div class="confidence-value">${ca.profit_probability}%</div>
-                                </div>
-                            </div>
-
-                            <div class="summary-text">
-                                <strong>📝 الملخص:</strong><br>
-                                ${ca.summary}
-                            </div>
-
-                            <div class="summary-text">
-                                <strong>💡 التوصية النهائية:</strong><br>
-                                ${ca.recommendation}
-                            </div>
-                        </div>
-
-                        <div class="divider"></div>
-
-                        <div class="analysis-section">
-                            <div class="section-title">⚠️ المخاطر</div>
-                            <div class="list-section">
-                                <ul>
-                                    ${ca.risks.map(risk => `<li class="risk-item">${risk}</li>`).join('')}
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="analysis-section">
-                            <div class="section-title">✅ الفرص</div>
-                            <div class="list-section">
-                                <ul>
-                                    ${ca.opportunities.map(opp => `<li class="opportunity-item">${opp}</li>`).join('')}
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="analysis-section">
-                            <div class="section-title">⚡ التنبيهات الذكية</div>
-                            <div class="list-section">
-                                <ul>
-                                    ${ca.alerts.map(alert => `<li class="alert-item">${alert}</li>`).join('')}
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="divider"></div>
-
-                        <div class="analysis-section">
-                            <div class="section-title">💰 تحليل السيولة والقطاع</div>
-                            <div class="summary-text">
-                                ${ca.sector_flow}
-                            </div>
-                        </div>
-
-                        <div class="analysis-section">
-                            <div class="section-title">📊 النسبة التاريخية</div>
-                            <div class="summary-text">
-                                ${ca.historical_success}
-                            </div>
-                        </div>
-                    `;
-                }
-
-                analysisHTML += `
-                    <div class="divider"></div>
-
-                    <div class="analysis-section">
-                        <div class="section-title">📊 المؤشرات الفنية الكاملة</div>
-                        <div class="indicators-grid">
-                            <div class="indicator-box">
-                                <div class="indicator-label">RSI</div>
-                                <div class="indicator-value">${data.indicators.rsi}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">MACD</div>
-                                <div class="indicator-value">${data.indicators.macd}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">ADX</div>
-                                <div class="indicator-value">${data.indicators.adx}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">MFI</div>
-                                <div class="indicator-value">${data.indicators.mfi}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">ATR</div>
-                                <div class="indicator-value">${data.indicators.atr}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">ROC</div>
-                                <div class="indicator-value">${data.indicators.roc}%</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">SMA-20</div>
-                                <div class="indicator-value">$${data.indicators.sma_20}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">SMA-50</div>
-                                <div class="indicator-value">$${data.indicators.sma_50}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">EMA-9</div>
-                                <div class="indicator-value">$${data.indicators.ema_9}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">EMA-21</div>
-                                <div class="indicator-value">$${data.indicators.ema_21}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analysis-section">
-                        <div class="section-title">💼 البيانات الأساسية</div>
-                        <div class="indicators-grid">
-                            <div class="indicator-box">
-                                <div class="indicator-label">P/E Ratio</div>
-                                <div class="indicator-value">${data.fundamentals.pe_ratio || 'N/A'}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">EPS</div>
-                                <div class="indicator-value">$${data.fundamentals.eps || 'N/A'}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">Market Cap</div>
-                                <div class="indicator-value">${(data.fundamentals.market_cap / 1e9).toFixed(1)}B</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">القطاع</div>
-                                <div class="indicator-value">${data.fundamentals.sector}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analysis-section">
-                        <div class="section-title">📊 تحليل حجم التداول</div>
-                        <div class="indicators-grid">
-                            <div class="indicator-box">
-                                <div class="indicator-label">الحجم الحالي</div>
-                                <div class="indicator-value">${data.volume_analysis.current.toLocaleString()}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">المتوسط</div>
-                                <div class="indicator-value">${data.volume_analysis.average.toLocaleString()}</div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">الفرق</div>
-                                <div class="indicator-value ${data.volume_analysis.difference_pct >= 0 ? 'positive' : 'negative'}">
-                                    ${data.volume_analysis.difference_pct >= 0 ? '+' : ''}${data.volume_analysis.difference_pct}%
-                                </div>
-                            </div>
-                            <div class="indicator-box">
-                                <div class="indicator-label">الاتجاه</div>
-                                <div class="indicator-value">${data.volume_analysis.trend}</div>
-                            </div>
-                        </div>
-                        ${data.volume_analysis.is_unusual ? '<div class="summary-text" style="background:#fff3cd;color:#856404;">⚠️ <strong>تحذير:</strong> حجم تداول غير طبيعي - راقب التلاعب المحتمل!</div>' : ''}
-                    </div>
-                `;
-
-                if (data.claude_analysis && data.claude_analysis.glossary) {
-                    analysisHTML += `
-                        <div class="divider"></div>
-
-                        <div class="analysis-section">
-                            <div class="section-title">📖 شرح المصطلحات</div>
-                            <div class="glossary-grid">
-                                ${Object.entries(data.claude_analysis.glossary).map(([term, def]) => `
-                                    <div class="glossary-item">
-                                        <div class="glossary-term">${term}</div>
-                                        <div class="glossary-definition">${def}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                }
-
-                modalBody.innerHTML = analysisHTML;
-                window.currentAnalysisData = data;
-
-            } catch (err) {
-                modalBody.innerHTML = `
-                    <div class="error">
-                        ${err.message || 'فشل في تحميل التحليل المفصل. يرجى المحاولة مرة أخرى.'}
-                    </div>
-                `;
-                console.error(err);
+                content.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading details:', error);
+                content.innerHTML = '<div class="error">❌ فشل تحميل التفاصيل</div>';
             }
         }
 
-        async function saveCurrentAnalysis() {
-            if (window.currentAnalysisData) {
-                await saveRecommendation(window.currentAnalysisData);
+        async function saveRecommendation(symbol) {
+            const saveBtn = event.target;
+            saveBtn.disabled = true;
+            saveBtn.textContent = '⏳ جاري الحفظ...';
+            
+            try {
+                const response = await fetch(`${API_URL}/analysis/${symbol}`);
+                const data = await response.json();
+                
+                const saveResponse = await fetch(`${API_URL}/save-recommendation`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symbol: data.symbol,
+                        name: data.name,
+                        date: new Date().toISOString().split('T')[0],
+                        score: data.score,
+                        signal: data.signal,
+                        entry_price: data.price,
+                        confirmation_score: data.confirmation.positive_count,
+                        confirmation_verdict: data.confirmation.verdict,
+                        target_short: data.targets.target_short,
+                        target_medium: data.targets.target_medium,
+                        stop_loss: data.targets.stop_loss,
+                        rsi: data.indicators.rsi,
+                        macd: data.indicators.macd,
+                        adx: data.indicators.adx,
+                        grade: data.opportunity_quality ? data.opportunity_quality.grade : null,
+                        risk_reward_ratio: data.risk_reward ? data.risk_reward.ratio : null
+                    })
+                });
+                
+                const result = await saveResponse.json();
+                
+                if (result.success) {
+                    saveBtn.textContent = '✅ تم الحفظ!';
+                    saveBtn.style.background = '#059669';
+                    setTimeout(() => {
+                        saveBtn.textContent = '💾 حفظ';
+                        saveBtn.style.background = '#10b981';
+                        saveBtn.disabled = false;
+                    }, 2000);
+                } else {
+                    throw new Error(result.error || 'فشل الحفظ');
+                }
+            } catch (error) {
+                console.error('Error saving:', error);
+                saveBtn.textContent = '❌ فشل الحفظ';
+                saveBtn.style.background = '#dc2626';
+                setTimeout(() => {
+                    saveBtn.textContent = '💾 حفظ';
+                    saveBtn.style.background = '#10b981';
+                    saveBtn.disabled = false;
+                }, 2000);
+            }
+        }
+
+        async function loadSavedRecommendations() {
+            const container = document.getElementById('saved-recommendations');
+            const statsDiv = document.getElementById('saved-stats');
+            
+            container.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
+            
+            try {
+                const response = await fetch(`${API_URL}/saved-recommendations`);
+                const result = await response.json();
+                
+                if (!result.success || result.recommendations.length === 0) {
+                    container.innerHTML = '<div class="no-data">لا توجد توصيات محفوظة</div>';
+                    statsDiv.innerHTML = '';
+                    return;
+                }
+                
+                const recommendations = result.recommendations;
+                
+                const totalRecs = recommendations.length;
+                
+                statsDiv.innerHTML = `
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">${totalRecs}</div>
+                            <div class="stat-label">إجمالي التوصيات</div>
+                        </div>
+                    </div>
+                `;
+                
+                let html = '<div class="recommendations-table"><table><thead><tr>';
+                html += '<th>الرمز</th><th>التاريخ</th><th>النقاط</th><th>Grade</th><th>التوصية</th>';
+                html += '<th>سعر الدخول</th><th>الهدف</th><th>R/R</th><th>إجراءات</th>';
+                html += '</tr></thead><tbody>';
+                
+                recommendations.forEach(rec => {
+                    const daysAgo = Math.floor((Date.now() - new Date(rec.created_at).getTime()) / (1000 * 60 * 60 * 24));
+                    
+                    html += `<tr>
+                        <td><strong>${rec.symbol}</strong><br><small>${rec.name}</small></td>
+                        <td>${rec.date}<br><small>منذ ${daysAgo} يوم</small></td>
+                        <td><span class="score-badge">${rec.score}/13</span></td>
+                        <td>${rec.grade || '-'}</td>
+                        <td><span class="signal-badge signal-${rec.signal.toLowerCase().replace(/ /g, '-')}">${rec.signal}</span></td>
+                        <td>$${rec.entry_price.toFixed(2)}</td>
+                        <td>$${rec.target_short.toFixed(2)}</td>
+                        <td>${rec.risk_reward_ratio ? rec.risk_reward_ratio.toFixed(2) : '-'}</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteRecommendation(${rec.id})">🗑️ حذف</button>
+                        </td>
+                    </tr>`;
+                });
+                
+                html += '</tbody></table></div>';
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading:', error);
+                container.innerHTML = '<div class="error">❌ فشل تحميل التوصيات</div>';
+            }
+        }
+
+        async function deleteRecommendation(id) {
+            if (!confirm('هل أنت متأكد من الحذف؟')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/delete-recommendation/${id}`, {
+                    method: 'DELETE'
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    await loadSavedRecommendations();
+                }
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('فشل الحذف');
+            }
+        }
+
+        async function deleteAllRecommendations() {
+            if (!confirm('هل أنت متأكد من حذف جميع التوصيات؟')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/delete-all-recommendations`, {
+                    method: 'DELETE'
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    await loadSavedRecommendations();
+                }
+            } catch (error) {
+                console.error('Error deleting all:', error);
+                alert('فشل الحذف');
             }
         }
 
         function closeModal() {
-            document.getElementById('detailModal').style.display = 'none';
+            document.getElementById('detail-modal').classList.remove('active');
         }
 
-        function getSignalClass(signal) {
-            const map = {
-                'Super Strong Buy': 'super-strong-buy',
-                'Strong Buy': 'strong-buy',
-                'Buy': 'buy',
-                'Hold': 'hold',
-                'Sell': 'sell'
-            };
-            return map[signal] || 'hold';
-        }
-
-        function getSignalArabic(signal) {
-            const map = {
-                'Super Strong Buy': 'شراء قوي جداً ⚡⚡⚡',
-                'Strong Buy': 'شراء قوي',
-                'Buy': 'راقب',
-                'Hold': 'لا تدخل',
-                'Sell': 'بيع'
-            };
-            return map[signal] || signal;
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('detailModal');
-            if (event.target == modal) {
+        document.getElementById('detail-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'detail-modal') {
                 closeModal();
             }
-        }
+        });
 
-        initDB();
-        loadData();
-        setInterval(loadData, 600000);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStocks();
+        });
     </script>
 </body>
 </html>
