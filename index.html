@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OptiMax - تحليل الأسهم الشرعية</title>
+    <title>OptiMax v8.0 - Professional Edition</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -35,6 +35,13 @@
         .header h1 {
             color: #667eea;
             font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .version {
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.1em;
             margin-bottom: 10px;
         }
 
@@ -194,27 +201,27 @@
             font-weight: bold;
         }
 
-        .signal-super-strong-buy {
+        .signal-إشارة-قوية-جداً {
             background: #10b981;
             color: white;
         }
 
-        .signal-strong-buy {
+        .signal-إشارة-قوية {
             background: #34d399;
             color: white;
         }
 
-        .signal-buy {
+        .signal-إشارة-إيجابية {
             background: #6ee7b7;
             color: #065f46;
         }
 
-        .signal-hold {
+        .signal-إشارة-محايدة {
             background: #fbbf24;
             color: #78350f;
         }
 
-        .signal-sell {
+        .signal-إشارة-سلبية {
             background: #ef4444;
             color: white;
         }
@@ -248,7 +255,7 @@
 
         .modal.active {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: 20px;
         }
@@ -257,22 +264,35 @@
             background: white;
             padding: 30px;
             border-radius: 20px;
-            max-width: 800px;
+            max-width: 1200px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
+            margin: 20px 0;
         }
 
         .close-modal {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+            position: sticky;
+            top: 10px;
+            left: 10px;
             font-size: 2em;
             cursor: pointer;
-            background: none;
+            background: #ef4444;
+            color: white;
             border: none;
-            color: #666;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .close-modal:hover {
+            background: #dc2626;
         }
 
         .detail-section {
@@ -282,9 +302,78 @@
             border-radius: 10px;
         }
 
+        .detail-section.stage-1 {
+            border: 3px solid #667eea;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8edff 100%);
+        }
+
+        .detail-section.stage-2 {
+            border: 3px solid #10b981;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
         .detail-section h3 {
             color: #667eea;
             margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .detail-section.stage-2 h3 {
+            color: #10b981;
+        }
+
+        .signals-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .signals-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .signals-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: right;
+        }
+
+        .signals-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .summary-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .claude-indicator-box {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-right: 4px solid #10b981;
+        }
+
+        .claude-indicator-box h4 {
+            color: #10b981;
+            margin-bottom: 10px;
+        }
+
+        .claude-indicator-box p {
+            line-height: 1.8;
+            color: #333;
+            margin: 5px 0;
         }
 
         .detail-grid {
@@ -336,6 +425,49 @@
             font-size: 1.2em;
         }
 
+        .stage-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .stage-1-badge {
+            background: #667eea;
+            color: white;
+        }
+
+        .stage-2-badge {
+            background: #10b981;
+            color: white;
+        }
+
+        .final-decision-box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .final-decision-box h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .final-decision-box.negative {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+        }
+
+        .final-decision-box.neutral {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -356,14 +488,19 @@
             .search-input-group {
                 flex-direction: column;
             }
+
+            .signals-table {
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📈 OptiMax v7.2.0</h1>
-            <p>تحليل ذكي للأسهم الشرعية - Ultra Edition</p>
+            <h1>📈 OptiMax</h1>
+            <div class="version">v8.0.0 - Professional Edition</div>
+            <p>تحليل ذكي من مرحلتين: الإشارات الفنية + تحليل Claude AI المتقدم</p>
         </div>
 
         <div class="search-box">
@@ -376,7 +513,7 @@
                     onkeypress="if(event.key === 'Enter') searchStock()"
                 >
                 <button class="search-btn" onclick="searchStock()" id="search-btn">
-                    🔍 بحث
+                    🔍 بحث وتحليل
                 </button>
             </div>
         </div>
@@ -421,7 +558,7 @@
             }
 
             btn.disabled = true;
-            btn.textContent = '⏳ جاري البحث...';
+            btn.textContent = '⏳ جاري البحث والتحليل...';
 
             try {
                 await showDetails(symbol);
@@ -430,7 +567,7 @@
                 alert('فشل تحليل السهم. تأكد من رمز السهم.');
             } finally {
                 btn.disabled = false;
-                btn.textContent = '🔍 بحث';
+                btn.textContent = '🔍 بحث وتحليل';
             }
         }
 
@@ -461,8 +598,8 @@
                             <div class="stock-change ${changeClass}">
                                 ${changeSign}${stock.change_pct.toFixed(2)}%
                             </div>
-                            <div class="score-badge">${stock.score}/13</div>
-                            <div class="signal-badge signal-${stock.signal.toLowerCase().replace(/ /g, '-')}">${stock.signal}</div>
+                            <div class="score-badge">${stock.score}/14.5</div>
+                            <div class="signal-badge signal-${stock.signal.replace(/ /g, '-')}">${stock.signal}</div>
                             <div style="margin-top: 10px; color: #666;">
                                 RSI: ${stock.rsi} | MACD: ${stock.macd}
                             </div>
@@ -484,212 +621,201 @@
             const content = document.getElementById('detail-content');
             
             modal.classList.add('active');
-            content.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
+            content.innerHTML = '<div class="loading" style="color: #333;">⏳ جاري التحليل الشامل...</div>';
             
             try {
                 const response = await fetch(`${API_URL}/analysis/${symbol}`);
                 const data = await response.json();
                 
                 let html = `
-                    <h2>${data.symbol} - ${data.name}</h2>
-                    <p>السعر: $${data.price} | التغير: ${data.change_pct >= 0 ? '+' : ''}${data.change_pct.toFixed(2)}%</p>
+                    <h2 style="color: #667eea; margin-bottom: 10px;">${data.symbol} - ${data.name}</h2>
+                    <p style="font-size: 1.2em; margin-bottom: 30px;">
+                        السعر: <strong>$${data.price}</strong> | 
+                        التغير: <strong class="${data.change_pct >= 0 ? 'positive' : 'negative'}">${data.change_pct >= 0 ? '+' : ''}${data.change_pct.toFixed(2)}%</strong>
+                    </p>
 
-                    <div class="detail-section">
-                        <h3>📈 ملخص التقييم</h3>
-                        <div class="score-badge" style="font-size: 1.5em;">${data.score}/13</div>
-                        <div class="signal-badge signal-${data.signal.toLowerCase().replace(/ /g, '-')}" style="font-size: 1.2em; margin: 10px 0;">
-                            ${data.signal}
-                        </div>
-                        ${data.opportunity_quality ? `
-                            <div style="margin: 10px 0;">
-                                <strong>Grade: ${data.opportunity_quality.grade}</strong>
-                                <p>${data.opportunity_quality.recommendation}</p>
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    <!-- المرحلة 1️⃣: تقييم الإشارات الفنية -->
+                    <!-- ═══════════════════════════════════════════════════════ -->
+
+                    <div class="detail-section stage-1">
+                        <div class="stage-badge stage-1-badge">📊 المرحلة 1: تقييم الإشارات الفنية</div>
+                        <h3>تحليل بسيط ومباشر لكل مؤشر فني</h3>
+                        
+                        <table class="signals-table">
+                            <thead>
+                                <tr>
+                                    <th>المؤشر</th>
+                                    <th>القيمة</th>
+                                    <th>الحالة</th>
+                                    <th>النقاط</th>
+                                    <th>التفسير</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.technical_signals.signals.map(signal => `
+                                    <tr>
+                                        <td style="font-weight: bold;">${signal.name}</td>
+                                        <td>${typeof signal.value === 'number' ? signal.value.toFixed(2) : signal.value}</td>
+                                        <td>${signal.status}</td>
+                                        <td><strong>${signal.score.toFixed(1)}/${signal.max.toFixed(1)}</strong></td>
+                                        <td style="color: #666;">${signal.interpretation}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+
+                        <div class="summary-box">
+                            <div style="font-size: 1.5em; font-weight: bold; color: #667eea; margin-bottom: 15px;">
+                                📈 النتيجة الفنية الإجمالية: ${data.technical_signals.total_score}/${data.technical_signals.total_max} 
+                                (${data.technical_signals.percentage}%)
                             </div>
-                        ` : ''}
+                            <div style="font-size: 1.3em; margin-bottom: 15px;">
+                                🎯 التقييم العام: <strong>${data.technical_signals.overall_assessment}</strong>
+                            </div>
+                            <div style="font-size: 1.1em; color: #666;">
+                                ✅ ${data.technical_signals.positive_count} إشارات إيجابية &nbsp;|&nbsp;
+                                ⚪ ${data.technical_signals.neutral_count} إشارات محايدة &nbsp;|&nbsp;
+                                ❌ ${data.technical_signals.negative_count} إشارة سلبية
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="detail-section">
-                        <h3>🔍 إشارات التأكيد</h3>
-                        <div class="detail-grid">
-                            ${Object.entries(data.confirmation.signals).map(([key, value]) => `
-                                <div class="detail-item">
-                                    <strong>${key.toUpperCase()}</strong>
-                                    ${value}
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    <!-- المرحلة 2️⃣: تحليل Claude AI المتقدم -->
+                    <!-- ═══════════════════════════════════════════════════════ -->
+
+                    <div class="detail-section stage-2">
+                        <div class="stage-badge stage-2-badge">🤖 المرحلة 2: تحليل Claude AI المتقدم</div>
+                        <h3>تحليل عميق وشامل لكل عنصر</h3>
+                        
+                        ${data.claude_deep_analysis.error ? `
+                            <div class="error">
+                                ❌ حدث خطأ في تحليل Claude AI: ${data.claude_deep_analysis.error}
+                            </div>
+                        ` : ''}
+
+                        <!-- 1. تحليل المؤشرات التفصيلي -->
+                        ${data.claude_deep_analysis.detailed_indicators && data.claude_deep_analysis.detailed_indicators.length > 0 ? `
+                            <div style="margin: 25px 0;">
+                                <h4 style="color: #10b981; font-size: 1.3em; margin-bottom: 15px;">📊 تحليل تفصيلي لكل مؤشر:</h4>
+                                ${data.claude_deep_analysis.detailed_indicators.map((ind, i) => `
+                                    <div class="claude-indicator-box">
+                                        <h4>${i+1}️⃣ ${ind.name}</h4>
+                                        <p><strong>الحالة:</strong> ${ind.status}</p>
+                                        <p><strong>التفسير:</strong> ${ind.interpretation}</p>
+                                        <p><strong>الوزن:</strong> ${ind.weight}</p>
+                                        <p><strong>التأثير:</strong> ${ind.impact}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+
+                        <!-- 2. مستويات الدعم والمقاومة -->
+                        ${data.claude_deep_analysis.support_resistance_analysis ? `
+                            <div style="margin: 25px 0;">
+                                <h4 style="color: #10b981; font-size: 1.3em; margin-bottom: 15px;">🎯 مستويات الدعم والمقاومة:</h4>
+                                <div class="info-box">
+                                    ${typeof data.claude_deep_analysis.support_resistance_analysis === 'string' 
+                                        ? data.claude_deep_analysis.support_resistance_analysis 
+                                        : data.claude_deep_analysis.support_resistance_analysis.analysis || JSON.stringify(data.claude_deep_analysis.support_resistance_analysis)}
                                 </div>
-                            `).join('')}
-                        </div>
-                        <p style="margin-top: 15px; font-size: 1.1em;">
-                            <strong>${data.confirmation.positive_count}/${data.confirmation.total}</strong>
-                            <br>${data.confirmation.verdict}
-                        </p>
-                    </div>
-
-                    ${data.final_recommendation ? `
-                        <div class="${data.final_recommendation.confidence === 'عالية' ? 'success-box' : data.final_recommendation.confidence === 'منخفضة' ? 'warning-box' : 'info-box'}">
-                            <strong>📋 التوصية النهائية: ${data.final_recommendation.action}</strong>
-                            <p>${data.final_recommendation.reason}</p>
-                            <small>مستوى الثقة: ${data.final_recommendation.confidence}</small>
-                        </div>
-                    ` : ''}
-
-                    ${data.daily_change_context ? `
-                        <div class="${data.daily_change_context.type === 'تصحيح صحي' || data.daily_change_context.type === 'زخم قوي' ? 'success-box' : data.daily_change_context.type === 'تحذير' ? 'warning-box' : 'info-box'}">
-                            ${data.daily_change_context.message}
-                        </div>
-                    ` : ''}
-
-                    <div class="detail-section">
-                        <h3>🎯 الأهداف المتوقعة</h3>
-                        <p><strong>➡️ الاتجاه: ${data.targets.direction}</strong></p>
-                        <div class="detail-grid">
-                            <div class="detail-item">
-                                <strong>نقطة الدخول</strong>
-                                $${data.targets.entry}
-                            </div>
-                            <div class="detail-item">
-                                <strong>الهدف القصير</strong>
-                                $${data.targets.target_short} ⬆️
-                            </div>
-                            <div class="detail-item">
-                                <strong>الهدف المتوسط</strong>
-                                $${data.targets.target_medium} ⬆️
-                            </div>
-                            <div class="detail-item">
-                                <strong>وقف الخسارة</strong>
-                                $${data.targets.stop_loss} ⬇️
-                            </div>
-                        </div>
-                        ${data.risk_reward ? `
-                            <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
-                                <strong>نسبة المخاطرة/العائد: ${data.risk_reward.ratio}</strong>
-                                <p>عائد محتمل: ${data.risk_reward.potential_gain}% | خسارة محتملة: ${data.risk_reward.potential_loss}%</p>
-                                <p>التقييم: ${data.risk_reward.verdict}</p>
                             </div>
                         ` : ''}
-                    </div>
 
-                    ${data.position_risk && (data.position_risk.warnings.length > 0 || data.position_risk.opportunities.length > 0) ? `
-                        <div class="detail-section">
-                            <h3>⚠️ تحليل المكان</h3>
-                            ${data.position_risk.warnings.length > 0 ? `
+                        <!-- 3. تحليل الزخم -->
+                        ${data.claude_deep_analysis.momentum_analysis ? `
+                            <div style="margin: 25px 0;">
+                                <h4 style="color: #10b981; font-size: 1.3em; margin-bottom: 15px;">⚡ تحليل الزخم:</h4>
+                                <div class="info-box">
+                                    ${typeof data.claude_deep_analysis.momentum_analysis === 'string'
+                                        ? data.claude_deep_analysis.momentum_analysis
+                                        : data.claude_deep_analysis.momentum_analysis.analysis || JSON.stringify(data.claude_deep_analysis.momentum_analysis)}
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <!-- 4. تحليل المخاطرة/العائد -->
+                        ${data.claude_deep_analysis.risk_reward_analysis ? `
+                            <div style="margin: 25px 0;">
+                                <h4 style="color: #10b981; font-size: 1.3em; margin-bottom: 15px;">💰 تحليل المخاطرة/العائد:</h4>
                                 <div class="warning-box">
-                                    ${data.position_risk.warnings.map(w => `<p>${w}</p>`).join('')}
-                                </div>
-                            ` : ''}
-                            ${data.position_risk.opportunities.length > 0 ? `
-                                <div class="success-box">
-                                    ${data.position_risk.opportunities.map(o => `<p>${o}</p>`).join('')}
-                                </div>
-                            ` : ''}
-                        </div>
-                    ` : ''}
-
-                    ${data.late_entry_warning && data.late_entry_warning.warnings.length > 0 ? `
-                        <div class="warning-box">
-                            <strong>⚠️ تحذيرات الدخول المتأخر:</strong>
-                            ${data.late_entry_warning.warnings.map(w => `<p>${w}</p>`).join('')}
-                        </div>
-                    ` : ''}
-
-                    <div class="detail-section">
-                        <h3>📊 مستويات الدعم والمقاومة</h3>
-                        <div class="detail-grid">
-                            ${data.support_resistance.resistance_1 ? `
-                                <div class="detail-item">
-                                    <strong>مقاومة 1</strong>
-                                    $${data.support_resistance.resistance_1}
-                                </div>
-                            ` : ''}
-                            ${data.support_resistance.resistance_2 ? `
-                                <div class="detail-item">
-                                    <strong>مقاومة 2</strong>
-                                    $${data.support_resistance.resistance_2}
-                                </div>
-                            ` : ''}
-                            ${data.support_resistance.support_1 ? `
-                                <div class="detail-item">
-                                    <strong>دعم 1</strong>
-                                    $${data.support_resistance.support_1}
-                                </div>
-                            ` : ''}
-                            ${data.support_resistance.support_2 ? `
-                                <div class="detail-item">
-                                    <strong>دعم 2</strong>
-                                    $${data.support_resistance.support_2}
-                                </div>
-                            ` : ''}
-                        </div>
-                    </div>
-
-                    ${data.momentum_analysis ? `
-                        <div class="detail-section">
-                            <h3>⚡ تحليل الزخم</h3>
-                            <p><strong>النقاط: ${data.momentum_analysis.score}/10</strong></p>
-                            <p>القوة: ${data.momentum_analysis.strength}</p>
-                        </div>
-                    ` : ''}
-
-                    ${data.recent_performance ? `
-                        <div class="detail-section">
-                            <h3>📈 الأداء الأخير (5 أيام)</h3>
-                            <div class="detail-grid">
-                                <div class="detail-item">
-                                    <strong>الاتجاه</strong>
-                                    ${data.recent_performance.trend}
-                                </div>
-                                <div class="detail-item">
-                                    <strong>أيام إيجابية</strong>
-                                    ${data.recent_performance.positive_days}/5
-                                </div>
-                                <div class="detail-item">
-                                    <strong>متوسط التغير</strong>
-                                    ${data.recent_performance.avg_daily_change}%
-                                </div>
-                                <div class="detail-item">
-                                    <strong>الاستمرارية</strong>
-                                    ${data.recent_performance.consistency}
+                                    ${typeof data.claude_deep_analysis.risk_reward_analysis === 'string'
+                                        ? data.claude_deep_analysis.risk_reward_analysis
+                                        : data.claude_deep_analysis.risk_reward_analysis.analysis || JSON.stringify(data.claude_deep_analysis.risk_reward_analysis)}
                                 </div>
                             </div>
-                        </div>
-                    ` : ''}
+                        ` : ''}
 
-                    ${data.claude_analysis ? `
-                        <div class="detail-section">
-                            <h3>🎯 رأي Claude AI</h3>
-                            <p><strong>درجة الثقة: ${data.claude_analysis.confidence}/100</strong></p>
-                            <p><strong>تقييم النجاح: ${data.claude_analysis.success_rating}/10</strong></p>
-                            <p><strong>احتمالية الربح: ${data.claude_analysis.profit_probability}%</strong></p>
-                            <p style="margin-top: 15px;"><strong>📝 الملخص:</strong><br>${data.claude_analysis.summary}</p>
-                            <p style="margin-top: 15px;"><strong>💡 التوصية النهائية:</strong><br>${data.claude_analysis.recommendation}</p>
-                            
-                            ${data.claude_analysis.risks && data.claude_analysis.risks.length > 0 ? `
-                                <div style="margin-top: 15px;">
-                                    <strong>⚠️ المخاطر</strong>
-                                    <ul>
-                                        ${data.claude_analysis.risks.map(risk => `<li>${risk}</li>`).join('')}
-                                    </ul>
+                        <!-- 5. تقييم جودة الفرصة -->
+                        ${data.claude_deep_analysis.opportunity_quality_analysis ? `
+                            <div style="margin: 25px 0;">
+                                <h4 style="color: #10b981; font-size: 1.3em; margin-bottom: 15px;">🏆 تقييم جودة الفرصة:</h4>
+                                <div class="info-box">
+                                    ${typeof data.claude_deep_analysis.opportunity_quality_analysis === 'string'
+                                        ? data.claude_deep_analysis.opportunity_quality_analysis
+                                        : data.claude_deep_analysis.opportunity_quality_analysis.analysis || JSON.stringify(data.claude_deep_analysis.opportunity_quality_analysis)}
                                 </div>
-                            ` : ''}
+                            </div>
+                        ` : ''}
 
-                            ${data.claude_analysis.opportunities && data.claude_analysis.opportunities.length > 0 ? `
-                                <div style="margin-top: 15px;">
-                                    <strong>✅ الفرص</strong>
-                                    <ul>
-                                        ${data.claude_analysis.opportunities.map(opp => `<li>${opp}</li>`).join('')}
-                                    </ul>
+                        <!-- 6. حجم التداول والسيولة -->
+                        ${data.claude_deep_analysis.volume_and_liquidity ? `
+                            <div style="margin: 25px 0;">
+                                <h4 style="color: #10b981; font-size: 1.3em; margin-bottom: 15px;">📊 حجم التداول والسيولة:</h4>
+                                <div class="info-box">
+                                    ${typeof data.claude_deep_analysis.volume_and_liquidity === 'string'
+                                        ? data.claude_deep_analysis.volume_and_liquidity
+                                        : data.claude_deep_analysis.volume_and_liquidity.analysis || JSON.stringify(data.claude_deep_analysis.volume_and_liquidity)}
                                 </div>
-                            ` : ''}
+                            </div>
+                        ` : ''}
 
-                            ${data.claude_analysis.alerts && data.claude_analysis.alerts.length > 0 ? `
-                                <div style="margin-top: 15px;">
-                                    <strong>⚡ التنبيهات الذكية</strong>
-                                    <ul>
-                                        ${data.claude_analysis.alerts.map(alert => `<li>${alert}</li>`).join('')}
-                                    </ul>
+                        <!-- 7. التوصية النهائية من Claude -->
+                        ${data.claude_deep_analysis.final_recommendation ? `
+                            <div class="final-decision-box ${
+                                data.claude_deep_analysis.final_recommendation.decision.includes('ادخل') ? '' :
+                                data.claude_deep_analysis.final_recommendation.decision.includes('لا تدخل') ? 'negative' : 'neutral'
+                            }">
+                                <h4>🎯 التوصية النهائية من Claude AI</h4>
+                                <div style="font-size: 1.4em; font-weight: bold; margin: 15px 0;">
+                                    📋 القرار: ${data.claude_deep_analysis.final_recommendation.decision}
                                 </div>
-                            ` : ''}
-                        </div>
-                    ` : ''}
+                                <div style="margin: 20px 0; line-height: 1.9; font-size: 1.05em;">
+                                    <strong>📝 التحليل الشامل:</strong><br>
+                                    ${data.claude_deep_analysis.final_recommendation.comprehensive_analysis}
+                                </div>
+                                ${data.claude_deep_analysis.final_recommendation.reasons && data.claude_deep_analysis.final_recommendation.reasons.length > 0 ? `
+                                    <div style="margin: 20px 0;">
+                                        <strong>⚠️ الأسباب الرئيسية:</strong>
+                                        <ul style="margin: 10px 0; padding-right: 25px;">
+                                            ${data.claude_deep_analysis.final_recommendation.reasons.map(r => `<li style="margin: 8px 0;">${r}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                ` : ''}
+                                ${data.claude_deep_analysis.final_recommendation.conditions ? `
+                                    <div style="margin: 20px 0;">
+                                        <strong>✅ شروط الدخول:</strong><br>
+                                        ${data.claude_deep_analysis.final_recommendation.conditions}
+                                    </div>
+                                ` : ''}
+                                ${data.claude_deep_analysis.final_recommendation.alternatives ? `
+                                    <div style="margin: 20px 0;">
+                                        <strong>💡 البدائل المقترحة:</strong><br>
+                                        ${data.claude_deep_analysis.final_recommendation.alternatives}
+                                    </div>
+                                ` : ''}
+                                <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid rgba(255,255,255,0.3); font-size: 1.05em;">
+                                    <strong>درجة الثقة:</strong> ${data.claude_deep_analysis.final_recommendation.confidence}/100 &nbsp;|&nbsp;
+                                    <strong>احتمالية النجاح:</strong> ${data.claude_deep_analysis.final_recommendation.success_probability}%
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    <!-- بيانات إضافية -->
+                    <!-- ═══════════════════════════════════════════════════════ -->
 
                     <div class="detail-section">
                         <h3>📊 المؤشرات الفنية الكاملة</h3>
@@ -705,6 +831,18 @@
                         </div>
                     </div>
 
+                    <div class="detail-section">
+                        <h3>🎯 الأهداف والدعم/المقاومة</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item"><strong>نقطة الدخول</strong>$${data.targets.entry}</div>
+                            <div class="detail-item"><strong>الهدف القصير</strong>$${data.targets.target_short}</div>
+                            <div class="detail-item"><strong>الهدف المتوسط</strong>$${data.targets.target_medium}</div>
+                            <div class="detail-item"><strong>وقف الخسارة</strong>$${data.targets.stop_loss}</div>
+                            ${data.support_resistance.resistance_1 ? `<div class="detail-item"><strong>مقاومة 1</strong>$${data.support_resistance.resistance_1}</div>` : ''}
+                            ${data.support_resistance.support_1 ? `<div class="detail-item"><strong>دعم 1</strong>$${data.support_resistance.support_1}</div>` : ''}
+                        </div>
+                    </div>
+
                     ${data.fundamentals ? `
                         <div class="detail-section">
                             <h3>💼 البيانات الأساسية</h3>
@@ -716,24 +854,13 @@
                             </div>
                         </div>
                     ` : ''}
-
-                    <div class="detail-section">
-                        <h3>📊 تحليل حجم التداول</h3>
-                        <div class="detail-grid">
-                            <div class="detail-item"><strong>الحجم الحالي</strong>${data.volume_analysis.current.toLocaleString()}</div>
-                            <div class="detail-item"><strong>المتوسط</strong>${data.volume_analysis.average.toLocaleString()}</div>
-                            <div class="detail-item"><strong>الفرق</strong>${data.volume_analysis.difference_pct >= 0 ? '+' : ''}${data.volume_analysis.difference_pct.toFixed(2)}%</div>
-                            <div class="detail-item"><strong>الاتجاه</strong>${data.volume_analysis.trend}</div>
-                        </div>
-                        ${data.volume_analysis.is_unusual ? '<p class="warning-box">⚠️ تحذير: حجم تداول غير طبيعي - راقب التلاعب المحتمل!</p>' : ''}
-                    </div>
                 `;
                 
                 content.innerHTML = html;
                 
             } catch (error) {
                 console.error('Error loading details:', error);
-                content.innerHTML = '<div class="error">❌ فشل تحميل التفاصيل</div>';
+                content.innerHTML = '<div class="error">❌ فشل تحميل التفاصيل. يرجى المحاولة مرة أخرى.</div>';
             }
         }
 
